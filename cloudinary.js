@@ -10,7 +10,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary,
   params: {
-    folder: "wastetowealth_uploads",
+    folder: "profile_uploads",
     allowed_formats: ["jpg", "jpeg", "png", "webp"]
   }
 });
