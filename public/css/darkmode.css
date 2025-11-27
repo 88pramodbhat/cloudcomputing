@@ -1,0 +1,17 @@
+body.dark {
+  background: #1a1a1a;
+  color: white;
+}
+
+body.dark section {
+  background: #262626;
+}
+
+body.dark nav {
+  background: black;
+}
+
+body.dark .project-card {
+  background: #333;
+  box-shadow: none;
+}

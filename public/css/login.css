@@ -1,0 +1,37 @@
+.auth-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.btn-login,
+.btn-register {
+  padding: 10px 20px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+/* Login Button → White */
+.btn-login {
+  background: #fff;
+  color: #333;
+  border: 2px solid #fff;
+}
+
+.btn-login:hover {
+  background: transparent;
+  color: #fff;
+}
+
+/* Register Button → Blue */
+.btn-register {
+  background: #007bff;
+  color: #fff;
+}
+
+.btn-register:hover {
+  background: #0056b3;
+}

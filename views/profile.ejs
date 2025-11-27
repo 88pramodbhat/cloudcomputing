@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complete Resume Information</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px auto;
+      max-width: 850px;
+    }
+    h2 {
+      margin-top: 30px;
+      border-bottom: 2px solid #000;
+      padding-bottom: 5px;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #aaa;
+      border-radius: 5px;
+    }
+    button {
+      background: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+      font-size: 16px;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+
+</head>
+<body>
+
+  <h1>Enter Your Complete Resume Details</h1>
+
+  <form action="/profile" method="POST" enctype="multipart/form-data">
+
+    <!-- PERSONAL INFO -->
+    <h2>Personal Information</h2>
+
+    <input type="text" name="fullname" placeholder="Full Name" required>
+
+    <textarea name="bio" rows="3" placeholder="Short Bio (2–3 lines)" required></textarea>
+
+    <label>Upload Profile Photo:</label>
+    <input type="file" name="profileImage" accept="image/*">
+
+    <input type="email" name="email" placeholder="Email Address" required>
+
+    <input type="text" name="phone" placeholder="Phone Number">
+
+    <input type="text" name="github" placeholder="GitHub URL">
+
+    <input type="text" name="linkedin" placeholder="LinkedIn URL">
+
+
+    <!-- EDUCATION -->
+    <h2>Education Details</h2>
+
+    <input type="text" name="degree" placeholder="Degree (B.Tech, BCA, etc.)">
+
+    <input type="text" name="branch" placeholder="Branch (CSE, ECE etc.)">
+
+    <input type="text" name="university" placeholder="University / College Name">
+
+    <input type="text" name="cgpa" placeholder="cgpa">
+
+    <input type="text" name="year" placeholder="Passing Year">
+
+    <!-- EDUCATION LIST -->
+    <h3>10th marks</h3>
+
+   <input type="text" name="edu_institute10" placeholder="institute name">
+<input type="text" name="edu_year10" placeholder="year of passing">
+<input type="text" name="edu_score10" placeholder="Percentage">
+<h3>12th marks</h3>
+
+   <input type="text" name="edu_institute12" placeholder="institute name">
+<input type="text" name="edu_year12" placeholder="year of passing">
+<input type="text" name="edu_score12" placeholder="Percentage">
+
+
+
+    
+    <h2>Skills</h2>
+
+    <input type="text" name="frontend" placeholder="Frontend Skills (comma separated)">
+    <input type="text" name="backend" placeholder="Backend Skills (comma separated)">
+    <input type="text" name="tools" placeholder="Tools (comma separated)">
+
+
+    <!-- PROJECTS -->
+    <h2>Projects</h2>
+
+    <input type="text" name="project_title" placeholder="Project Title">
+    <textarea name="project_description" rows="3" placeholder="Project Description"></textarea>
+    <input type="text" name="project_link" placeholder="Project Link (GitHub or Live)">
+
+
+    <button type="submit">Generate Resume →</button>
+
+  </form>
+
+</body>
+</html>
