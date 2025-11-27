@@ -5,39 +5,26 @@ const mongoose = require("mongoose");
 const path = require('path');
 const profileuser = require("./model/profileuser");
 require("dotenv").config();
-//const mongooseURL = "mongodb://127.0.0.1:27017/profileDb";
-const mongooseURL=process.env.MONGOURL;
+
+const mongooseURL = process.env.MONGOURL;
 
 const expressSession = require("express-session");
 const flash = require("connect-flash");
 
-// Multer for image upload
+// CLOUDINARY + MULTER
 const multer = require("multer");
-
-
-// Multer storage
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
-  }
-});
-
-const upload = multer({ storage: storage });
+const { storage } = require("./cloudinary");   // Cloudinary storage
+const upload = multer({ storage });            // Multer now uses cloudinary storage
 
 // Body parser
 app.use(express.urlencoded({ extended: true }));
 
 // Public folders
-app.use("/uploads", express.static("uploads"));
+app.use("/uploads", express.static("uploads"));  
 app.use(express.static(path.join(__dirname, "public")));
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
-console.log(process.env.secret);
-
 
 // MongoDB connection
 async function main() {
@@ -47,7 +34,6 @@ main()
   .then(() => console.log("connected to mongoose"))
   .catch((err) => console.log("error connecting to mongoose:", err));
 
-
 // Session + Flash
 const sessionoptions = {
   secret: process.env.SECRET,
@@ -56,7 +42,6 @@ const sessionoptions = {
 };
 app.use(expressSession(sessionoptions));
 app.use(flash());
-
 
 // -------------------- ROUTES -------------------- //
 
@@ -68,22 +53,33 @@ app.get("/", (req, res) => {
   });
 });
 
-
 // STEP 1 — Profile Form
 app.get("/profile", (req, res) => {
   res.render("profile.ejs");
 });
 
 
+// ------------------------
+// ✅ CLOUDINARY TEST UPLOAD ROUTE
+// (You requested this)
+// ------------------------
+app.post("/upload", upload.single("image"), (req, res) => {
+  console.log("Cloudinary File URL:", req.file.path); // Cloudinary URL
+  res.send("Image uploaded successfully to Cloudinary!");
+});
 
+
+// ------------------------
+// REAL PROFILE UPLOAD ROUTE (Cloudinary Applied)
+// ------------------------
 app.post("/profile", upload.single("profileImage"), async (req, res) => {
   const {
     fullname, bio, email, phone, github, linkedin,
     degree, branch, university, year,
-    edu_institute10,edu_year10, edu_score10,
-    edu_institute12,edu_year12, edu_score12,
+    edu_institute10, edu_year10, edu_score10,
+    edu_institute12, edu_year12, edu_score12,
     frontend, backend, tools,
-    project_title, project_description, project_link,cgpa
+    project_title, project_description, project_link, cgpa
   } = req.body;
 
   const user = new profileuser({
@@ -99,24 +95,23 @@ app.post("/profile", upload.single("profileImage"), async (req, res) => {
     year,
     cgpa,
 
-    profileImage: req.file ? "/uploads/" + req.file.filename : null,
+    // ✅ Cloudinary URL saved here
+    profileImage: req.file ? req.file.path : null,
 
     education10: [
-  {
-    institute: edu_institute10,
-    year: edu_year10,
-    score: edu_score10
-  }
-],
-education12: [
-  {
-    institute: edu_institute12,
-    year: edu_year12,
-    score: edu_score12
-  }
-],
-
-
+      {
+        institute: edu_institute10,
+        year: edu_year10,
+        score: edu_score10
+      }
+    ],
+    education12: [
+      {
+        institute: edu_institute12,
+        year: edu_year12,
+        score: edu_score12
+      }
+    ],
 
     skills: {
       frontend: frontend.split(","),
@@ -138,18 +133,15 @@ education12: [
   res.redirect("/preview");
 });
 
-
+// Preview Route
 app.get("/preview", (req, res) => {
-  const user = req.session.user; // get user from session
-
+  const user = req.session.user;
   if (!user) {
     req.flash("error", "No user found. Please fill the profile first.");
     return res.redirect("/profile");
   }
-
   res.render("preview.ejs", { user });
 });
-
 
 // SERVER
 app.listen(8080, () => {
