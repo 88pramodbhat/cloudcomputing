@@ -50,7 +50,7 @@ mongoose
 // ----------------- ROUTES ----------------- //
 
 app.get("/", (req, res) => {
-  res.redirect("/profile");
+  res.redirect("index.ejs");
 });
 
 // Show profile form
