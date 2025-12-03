@@ -50,12 +50,12 @@ mongoose
 // ----------------- ROUTES ----------------- //
 
 app.get("/", (req, res) => {
-  res.redirect("index.ejs");
+  res.render("index.ejs");
 });
 
 // Show profile form
 app.get("/profile", (req, res) => {
-  res.render("profile");
+  res.render("profile.ejs");
 });
 
 // ----------------- PROFILE POST ROUTE ----------------- //
