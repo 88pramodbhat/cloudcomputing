@@ -29,6 +29,7 @@ const userSchema = new mongoose.Schema({
       score: String
     }
   ],
+
   education12: [
     {
       institute: String,
@@ -43,7 +44,7 @@ const userSchema = new mongoose.Schema({
   degree: String,
   branch: String,
   university: String,
-  cgpa:String,
+  cgpa: String,
   year: String,
 
   createdAt: { type: Date, default: Date.now }
