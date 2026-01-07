@@ -14,7 +14,7 @@ require("dotenv").config();
 
 // ----------------- MONGODB CONNECTION ----------------- //
 
-const mongourl = "mongodb://mongo:27017/profileDb";
+const mongourl = process.env.MONGOURL;
 
 mongoose
   .connect(mongourl)
