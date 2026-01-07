@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Portfolio Builder</title>
+  <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+  <div class="container">
+    <div class="form-wrapper">
+      
+      <!-- FLASH MESSAGES -->
+      <% if (success && success.length > 0) { %>
+        <div class="alert alert-success">
+          <%= success %>
+        </div>
+      <% } %>
+
+      <% if (error && error.length > 0) { %>
+        <div class="alert alert-error">
+          <%= error %>
+        </div>
+      <% } %>
+
+      <!-- LOGIN FORM -->
+      <div class="form-container" id="loginForm">
+        <h2>Login to Your Account</h2>
+        <form action="/login" method="POST">
+          <div class="form-group">
+            <label for="login-email">Email Address</label>
+            <input type="email" id="login-email" name="email" placeholder="Enter your email" required>
+          </div>
+
+          <div class="form-group">
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" name="password" placeholder="Enter your password" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+
+        <p class="toggle-text">
+          Don't have an account? 
+          <a href="#" onclick="toggleForm(event)">Sign up here</a>
+        </p>
+      </div>
+
+      <!-- SIGNUP FORM -->
+      <div class="form-container hidden" id="signupForm">
+        <h2>Create New Account</h2>
+        <form action="/signup" method="POST">
+          <div class="form-group">
+            <label for="signup-fullname">Full Name</label>
+            <input type="text" id="signup-fullname" name="fullname" placeholder="Enter your full name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="signup-email">Email Address</label>
+            <input type="email" id="signup-email" name="email" placeholder="Enter your email" required>
+          </div>
+
+          <div class="form-group">
+            <label for="signup-password">Password</label>
+            <input type="password" id="signup-password" name="password" placeholder="Create a password (min 6 characters)" minlength="6" required>
+          </div>
+
+          <div class="form-group">
+            <label for="signup-confirm-password">Confirm Password</label>
+            <input type="password" id="signup-confirm-password" name="confirmPassword" placeholder="Re-enter your password" minlength="6" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Sign Up</button>
+        </form>
+
+        <p class="toggle-text">
+          Already have an account? 
+          <a href="#" onclick="toggleForm(event)">Login here</a>
+        </p>
+      </div>
+
+      <div class="back-home">
+        <a href="/">← Back to Home</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleForm(event) {
+      event.preventDefault();
+      const loginForm = document.getElementById('loginForm');
+      const signupForm = document.getElementById('signupForm');
+      
+      loginForm.classList.toggle('hidden');
+      signupForm.classList.toggle('hidden');
+    }
+
+    // Client-side password validation
+    document.querySelector('#signupForm form').addEventListener('submit', function(e) {
+      const password = document.getElementById('signup-password').value;
+      const confirmPassword = document.getElementById('signup-confirm-password').value;
+      
+      if (password !== confirmPassword) {
+        e.preventDefault();
+        alert('Passwords do not match!');
+      }
+    });
+  </script>
+</body>
+</html>

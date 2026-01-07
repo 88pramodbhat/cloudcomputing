@@ -1,0 +1,19 @@
+{
+  "name": "profile-service",
+  "version": "1.0.0",
+  "description": "Profile management microservice for portfolio builder",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "mongoose": "^8.20.0",
+    "dotenv": "^17.2.3",
+    "cors": "^2.8.5",
+    "multer": "^2.0.2",
+    "imagekit": "^4.2.0",
+    "axios": "^1.6.0"
+  }
+}

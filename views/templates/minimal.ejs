@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= user.fullname %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fafafa;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .header {
+      padding: 80px 60px 60px;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .profile-img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 30px;
+      border: 2px solid #1a1a1a;
+    }
+
+    .header h1 {
+      font-size: 36px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      letter-spacing: -0.5px;
+    }
+
+    .header .bio {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 25px;
+      font-weight: 300;
+    }
+
+    .contact-list {
+      list-style: none;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .contact-list li {
+      margin-bottom: 8px;
+    }
+
+    .contact-list a {
+      color: #1a1a1a;
+      text-decoration: none;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    .contact-list a:hover {
+      opacity: 0.6;
+    }
+
+    /* Content */
+    .content {
+      padding: 60px;
+    }
+
+    .section {
+      margin-bottom: 60px;
+    }
+
+    .section-title {
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 30px;
+      color: #1a1a1a;
+    }
+
+    /* Education */
+    .edu-item {
+      margin-bottom: 30px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .edu-item:last-child {
+      border-bottom: none;
+    }
+
+    .edu-item h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #1a1a1a;
+    }
+
+    .edu-item p {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 5px;
+    }
+
+    /* Skills */
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .skill-tag {
+      font-size: 13px;
+      color: #666;
+      padding: 8px 16px;
+      border: 1px solid #e5e5e5;
+      border-radius: 20px;
+      background: #fafafa;
+    }
+
+    /* Projects */
+    .project-item {
+      margin-bottom: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .project-item:last-child {
+      border-bottom: none;
+    }
+
+    .project-item h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: #1a1a1a;
+    }
+
+    .project-item p {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 12px;
+    }
+
+    .project-link {
+      font-size: 14px;
+      color: #1a1a1a;
+      text-decoration: none;
+      border-bottom: 1px solid #1a1a1a;
+      display: inline-block;
+    }
+
+    .project-link:hover {
+      opacity: 0.6;
+    }
+
+    /* Footer */
+    .footer {
+      padding: 40px 60px;
+      border-top: 1px solid #e5e5e5;
+      text-align: center;
+      font-size: 13px;
+      color: #999;
+    }
+
+    .footer a {
+      color: #1a1a1a;
+      text-decoration: none;
+      margin: 0 12px;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    .footer a:hover {
+      opacity: 0.6;
+    }
+
+    /* Download Button */
+    .download-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #1a1a1a;
+      color: white;
+      padding: 15px 30px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s;
+      z-index: 1000;
+      cursor: pointer;
+      border: none;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .download-btn:hover {
+      background: #333;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (max-width: 768px) {
+      .header, .content, .footer {
+        padding-left: 30px;
+        padding-right: 30px;
+      }
+
+      .header {
+        padding-top: 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <% if (user.profileImage) { %>
+        <img src="<%= user.profileImage %>" alt="Profile" class="profile-img">
+      <% } %>
+
+      <h1><%= user.fullname %></h1>
+      <p class="bio"><%= user.bio %></p>
+
+      <ul class="contact-list">
+        <% if (user.email) { %><li><a href="mailto:<%= user.email %>"><%= user.email %></a></li><% } %>
+        <% if (user.phone) { %><li><%= user.phone %></li><% } %>
+        <% if (user.github) { %><li><a href="<%= user.github %>" target="_blank">GitHub</a></li><% } %>
+        <% if (user.linkedin) { %><li><a href="<%= user.linkedin %>" target="_blank">LinkedIn</a></li><% } %>
+      </ul>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <!-- Education -->
+      <% if (user.degree || (user.education10 && user.education10.length) || (user.education12 && user.education12.length)) { %>
+        <div class="section">
+          <h2 class="section-title">Education</h2>
+          
+          <% if (user.degree) { %>
+            <div class="edu-item">
+              <h3><%= user.degree %><% if (user.branch) { %>, <%= user.branch %><% } %></h3>
+              <p><%= user.university %></p>
+              <% if (user.cgpa) { %><p>CGPA: <%= user.cgpa %></p><% } %>
+              <% if (user.year) { %><p><%= user.year %></p><% } %>
+            </div>
+          <% } %>
+
+          <% if (user.education12 && user.education12[0] && user.education12[0].institute) { %>
+            <div class="edu-item">
+              <h3>Higher Secondary</h3>
+              <p><%= user.education12[0].institute %></p>
+              <p><%= user.education12[0].score %> • <%= user.education12[0].year %></p>
+            </div>
+          <% } %>
+
+          <% if (user.education10 && user.education10[0] && user.education10[0].institute) { %>
+            <div class="edu-item">
+              <h3>Secondary</h3>
+              <p><%= user.education10[0].institute %></p>
+              <p><%= user.education10[0].score %> • <%= user.education10[0].year %></p>
+            </div>
+          <% } %>
+        </div>
+      <% } %>
+
+      <!-- Skills -->
+      <% if (user.skills && user.skills.length > 0 && user.skills[0].name) { %>
+        <div class="section">
+          <h2 class="section-title">Skills</h2>
+          <div class="skills-list">
+            <% user.skills.forEach(skill => { %>
+              <% if (skill.name) { %>
+                <span class="skill-tag"><%= skill.name %></span>
+              <% } %>
+            <% }) %>
+          </div>
+        </div>
+      <% } %>
+
+      <!-- Projects -->
+      <% if (user.projects && user.projects.length > 0 && user.projects[0].title) { %>
+        <div class="section">
+          <h2 class="section-title">Projects</h2>
+          <% user.projects.forEach(project => { %>
+            <% if (project.title) { %>
+              <div class="project-item">
+                <h3><%= project.title %></h3>
+                <p><%= project.description %></p>
+                <% if (project.link) { %>
+                  <a href="<%= project.link %>" target="_blank" class="project-link">View Project →</a>
+                <% } %>
+              </div>
+            <% } %>
+          <% }) %>
+        </div>
+      <% } %>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>© <%= new Date().getFullYear() %> <%= user.fullname %></p>
+      <p style="margin-top: 15px;">
+        <a href="/profile">Edit Profile</a>
+        <a href="/logout">Logout</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- Download PDF Button -->
+  <button class="download-btn" onclick="downloadPDF()">
+    <i class="fas fa-download"></i>
+    Download PDF
+  </button>
+
+  <script>
+    function downloadPDF() {
+      const element = document.querySelector('.container');
+      const username = '<%= user.fullname %>';
+      const filename = username.replace(/\s+/g, '_') + '_Portfolio.pdf';
+      
+      const opt = {
+        margin: 0.5,
+        filename: filename,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+      };
+      
+      const btn = document.querySelector('.download-btn');
+      btn.style.display = 'none';
+      
+      html2pdf().set(opt).from(element).save().then(() => {
+        btn.style.display = 'flex';
+      });
+    }
+  </script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title || "Portfolio Builder" %></title>
+  <title>"Portfolio Builder" %></title>
   <link rel="stylesheet" href="css/index.css">
   
 </head>
@@ -11,10 +11,24 @@
   <header class="hero">
     <div class="overlay">
       <div class="container">
+        <!-- Navigation with Login/Logout -->
+        <div style="text-align: right; margin-bottom: 20px;">
+          <% if (locals.currentUser) { %>
+            <span style="color: white; margin-right: 15px;">Welcome, <%= currentUser.name %>!</span>
+            <a href="/profile" style="color: white; margin-right: 15px; text-decoration: none; font-weight: 600;">My Profile</a>
+            <a href="/logout" style="color: white; text-decoration: none; font-weight: 600;">Logout</a>
+          <% } else { %>
+            <a href="/login" style="color: white; text-decoration: none; font-weight: 600; padding: 10px 20px; border: 2px solid white; border-radius: 25px;">Login / Sign Up</a>
+          <% } %>
+        </div>
 
         <h1>🚀 Build Your Portfolio in Minutes</h1>
         <p>Create a stunning professional portfolio with no coding required.</p>
-        <a href="/profile" class="btn">Start Building Now</a>
+        <% if (locals.currentUser) { %>
+          <a href="/profile" class="btn">Go to My Profile</a>
+        <% } else { %>
+          <a href="/login" class="btn">Start Building Now</a>
+        <% } %>
       </div>
     </div>
   </header>

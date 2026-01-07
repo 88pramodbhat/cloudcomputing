@@ -5,23 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title><%= user.fullname %> - Resume</title>
 
-  <!-- Resume Style -->
   <link rel="stylesheet" href="/css/resume.css">
 </head>
 
 <body>
 
   <!-- HEADER -->
+   <h1><%= user.fullname %></h1>
+
+      <p><%= user.bio %></p>
+
+      <div class="contact">
+        <p>📞 <%= user.phone || "Not Provided" %></p>
+        <p>✉️ <%= user.email %></p>
+
+        <% if (user.github) { %>
+          <p>GitHub: <a href="<%= user.github %>" target="_blank"><%= user.github %></a></p>
+        <% } %>
+
+        <% if (user.linkedin) { %>
+          <p>LinkedIn: <a href="<%= user.linkedin %>" target="_blank"><%= user.linkedin %></a></p>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+ <div class="section-title">Education</div>
+ 
   <div class="header">
     <% if (user.profileImage) { %>
       <img src="<%= user.profileImage %>" class="profile-img" />
     <% } %>
 
     <div>
-      <h1><%= user.fullname %></h1>
-
+      
       <% if (user.degree || user.branch) { %>
-        <p><strong><%= user.degree %></strong> – <%= user.branch %></p>
+        <p><strong><%= user.degree %></strong> - <%= user.branch %></p>
       <% } %>
 
       <% if (user.university) { %>
@@ -29,76 +48,71 @@
       <% } %>
 
       <% if (user.cgpa) { %>
-        <p>cgpa:<%= user.cgpa %></p>
+        <p>CGPA: <%= user.cgpa %></p>
       <% } %>
 
       <% if (user.year) { %>
         <p>Graduation Year: <%= user.year %></p>
       <% } %>
 
-      <p><%= user.bio %></p>
-    </div>
-  </div>
 
-  <!-- CONTACT SECTION -->
-  <div class="section-title">CONTACT</div>
 
-  <div class="contact">
-    <p>📞 <%= user.phone || "Not Provided" %></p>
-    <p>✉️ <%= user.email %></p>
+  <!-- EDUCATION 10 -->
+  <div class="section-title">Education - 10th</div>
+  <% if (user.education10 && user.education10.length > 0) { %>
+    <% user.education10.forEach(ed => { %>
+      <div class="edu-row">
+        <p><strong><%= ed.institute %></strong></p>
+        <p>Year of Passing: <%= ed.year %></p>
+        <p>Percentage: <%= ed.score %></p>
+      </div>
+    <% }) %>
+  <% } else { %>
+    <p>No 10th education details provided.</p>
+  <% } %>
 
-    <% if (user.github) { %>
-      <p>GitHub: <a href="<%= user.github %>" target="_blank"><%= user.github %></a></p>
-    <% } %>
 
-    <% if (user.linkedin) { %>
-      <p>LinkedIn: <a href="<%= user.linkedin %>" target="_blank"><%= user.linkedin %></a></p>
-    <% } %>
-  </div>
-
-<div class="section-title">EDUCATION - 10th</div>
-<% if (user.education10 && user.education10.length > 0) { %>
-  <% user.education10.forEach(ed => { %>
-    <div class="edu-row">
-      <p><strong><%= ed.institute %></strong></p>
-      <p><%= ed.year %> | <%= ed.score %></p>
-    </div>
-  <% }) %>
-<% } else { %>
-  <p>No 10th education details provided.</p>
-<% } %>
-
-<div class="section-title">EDUCATION - 12th</div>
-<% if (user.education12 && user.education12.length > 0) { %>
-  <% user.education12.forEach(ed => { %>
-    <div class="edu-row">
-      <p><strong><%= ed.institute %></strong></p>
-      <p><%= ed.year %> | <%= ed.score %></p>
-    </div>
-  <% }) %>
-<% } else { %>
-  <p>No 12th education details provided.</p>
-<% } %>
-
+  <!-- EDUCATION 12 -->
+  <div class="section-title">Education - 12th</div>
+  <% if (user.education12 && user.education12.length > 0) { %>
+    <% user.education12.forEach(ed => { %>
+      <div class="edu-row">
+        <p><strong><%= ed.institute %></strong></p>
+        <p>Year of Passing: <%= ed.year %></p>
+        <p>Percentage: <%= ed.score %></p>
+      </div>
+    <% }) %>
+  <% } else { %>
+    <p>No 12th education details provided.</p>
+  <% } %>
 
 
   <!-- SKILLS -->
-  <div class="section-title">SKILLS</div>
-  <% if (user.skills) { %>
-    <p><strong>Frontend:</strong> <%= user.skills.frontend.join(", ") %></p>
-    <p><strong>Backend:</strong> <%= user.skills.backend.join(", ") %></p>
-    <p><strong>Tools:</strong> <%= user.skills.tools.join(", ") %></p>
-  <% } else { %>
-    <p>No skills added.</p>
-  <% } %>
+  <div class="section-title">Skills</div>
+
+<% if (user.skills && user.skills.length > 0) { %>
+  
+  <ul>
+    <% user.skills.forEach(skill => { %>
+      <li>
+        <strong><%= skill.name %></strong>
+      </li>
+    <% }) %>
+  </ul>
+
+<% } else { %>
+  <p>No skills added.</p>
+<% } %>
+
 
   <!-- PROJECTS -->
-  <div class="section-title">PROJECTS</div>
+  <div class="section-title">Projects</div>
   <% if (user.projects && user.projects.length > 0) { %>
     <% user.projects.forEach(project => { %>
       <div class="project-row">
         <p><strong><%= project.title %></strong></p>
         <p><%= project.description %></p>
+
         <% if (project.link) { %>
           <p>🔗 <a href="<%= project.link %>" target="_blank"><%= project.link %></a></p>
         <% } %>
